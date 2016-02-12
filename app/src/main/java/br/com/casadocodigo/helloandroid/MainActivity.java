@@ -17,9 +17,19 @@ public class MainActivity extends Activity {
     private TextView saudacaoTestView;
     private String saudacao;
 
+    public void surpreenderUsuario(View v) {
+
+        Intent intent = new Intent(SaudacaoActivity.ACAO_EXIBIR_SAUDACAO);
+        intent.addCategory(SaudacaoActivity.CATEGORIA_SAUDACAO);
+        String texto = nomeEditText.getText().toString();
+        intent.putExtra(SaudacaoActivity.EXTRA_NOME_USUARIO, texto);
+        startActivity(intent);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -28,13 +38,36 @@ public class MainActivity extends Activity {
         this.saudacao = getResources().getString(R.string.saudacao);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+// A activity está prestes a se tornar visível
+    }
 
-    public void surpreenderUsuario(View v) {
-        Editable texto = this.nomeEditText.getText();
-        String msg = saudacao + " " + texto.toString();
+    @Override
+    protected void onResume() {
+        super.onResume();
+// A activity está visível
+    }
 
-        this.saudacaoTestView.setText(msg);
+    @Override
+    protected void onPause() {
+        super.onPause();
+/* Outra activity está recebendo o foco. Esta activity
+ficará pausada */
+    }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+// A activity não está mais visível
+// mas permanece em memória
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+// A activity está prestes a ser destruída
+// (removida da memória)
     }
 }
